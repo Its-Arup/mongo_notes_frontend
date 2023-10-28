@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 
 function CreateNote() {
@@ -11,6 +12,20 @@ function CreateNote() {
             body
         }
 
+        let token = localStorage.getItem("token") || null 
+  
+        axios.post("http://localhost:4500/notes/create",payload,{
+          headers:{
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          console.log(res.data)
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
     }
   return (
     <div>
@@ -18,7 +33,8 @@ function CreateNote() {
       <input type="text" value={title} placeholder='Enter Your Title' onChange={(e)=>{
         setTitle(e.target.value)
       }}/>
-      <textarea cols="30" rows="10" value={body} ></textarea>
+      <textarea cols="30" rows="10" value={body} onChange={(e)=>{setBody(e.target.value)}}></textarea>
+      <button onClick={()=>{handelCreat()}}>Add Note</button>
     </div>
   )
 }

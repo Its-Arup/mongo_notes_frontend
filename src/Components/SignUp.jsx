@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 function SignUp() {
@@ -7,22 +8,19 @@ function SignUp() {
 
   const registertion = () => {
     let payload = {
-      username: username,
-      email: email,
-      password: pass,
+       username,
+       email,
+       pass,
     };
-
-    fetch("Backend Deploy Link", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
+   
+    axios
+      .post("http://localhost:4500/user/register", payload)
+      .then((res) => {
+        console.log(res.data);
+      })
       .catch((err) => console.log(err));
   };
+
   return (
     <div>
       <h3>Registration Page</h3>
@@ -44,7 +42,13 @@ function SignUp() {
         value={pass}
         onChange={(e) => setPass(e.target.value)}
       />
-      <button onClick={()=>{registertion()}}>Register!</button>
+      <button
+        onClick={() => {
+          registertion();
+        }}
+      >
+        Register!
+      </button>
     </div>
   );
 }
