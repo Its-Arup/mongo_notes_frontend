@@ -44,7 +44,7 @@ function SignUp() {
         value={pass}
         onChange={(e) => setPass(e.target.value)}
       />
-      <button>Register!</button>
+      <button onClick={()=>{registertion()}}>Register!</button>
     </div>
   );
 }
